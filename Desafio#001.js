@@ -11,7 +11,7 @@ class User {
     const loginName = this.arrayClient.map((element) => {
       return element.name;
     });
-    const menuClient = Number(window.prompt("Bem vindo " + loginName + "! Seu saldo atual e de: " + initialValue + "\n1. Depositar Valor: \n2. Sacar Valor: \n3. Transações:", ""));
+    const menuClient = Number(window.prompt("Bem vindo " + loginName + "! Seu saldo atual é de: R$ " + initialValue + "\n1. Depositar Valor: \n2. Sacar Valor: \n3. Transações:", ""));
     switch (menuClient) {
       case 1:
         this.getDeposit();
@@ -41,22 +41,22 @@ class User {
     const addClient = {};
       addClient.id = this.uuidv4();
       addClient.name = prompt("Nome do Cliente:"),
-      addClient.birthday = prompt("Data de Nascimento"),
+      addClient.birthday = Number(window.prompt("Data de Nascimento")),
       addClient.email = prompt("Email:", ""),
-      addClient.cpf = prompt("CPF:", ""),
+      addClient.cpf = Number(window.prompt("CPF:", "")),
       addClient.address = {
         street: prompt("Nome da Rua:", ""),
-        streetNumber: prompt("Numero da Residência:", ""),
+        streetNumber: prompt("Número da Residência:", ""),
         zipCode: prompt("Cep:", ""),
         country: prompt("País:", "")
       };
-    addClient.account = {
+      addClient.account = {
       balance: 0.0
     };
     this.arrayClient.push(addClient);
 
-    const novo = Number(window.prompt("Deseja adicionar novo cliente?\n1. Sim\n2. Nao", ""));
-    switch (novo) {
+    const add = Number(window.prompt("Deseja adicionar novo cliente?\n1. Sim\n2. Não", ""));
+    switch (add) {
       case 1:
         this.createClient();
         break;
@@ -83,11 +83,11 @@ class User {
         return element.cpf;
       });
 
-      const indice = this.arrayClient.map((_, index) => {
+      const indicator = this.arrayClient.map((_, index) => {
         return index;
       });
 
-      const list = Number(window.prompt("Lista de Clientes:\n " + indice + ": " + client + ":\n" + cpf + "\n\n1. Editar Cliente\n2. Deletar Cliente\n3. Voltar", ""));
+    const list = Number(window.prompt("Lista de Clientes:\n " + indicator + ": " + client + ":\n" + cpf + "\n\n1. Editar Cliente\n2. Deletar Cliente\n3. Voltar", ""));
       switch (list) {
         case 1:
           this.editClient();
@@ -104,10 +104,13 @@ class User {
       }
     }
   }
+  
   editClient() {}
 
   deleteClient() {
-    const delet = Number(window.prompt("Digite o índice do cliente que deseja deletar:", ""));
+    const delet = Number(
+      window.prompt("Digite o índice do cliente que deseja deletar:", "")
+    );
 
     if (this.arrayClient.splice(delet, 1)) {
       alert("Cliente deletado com sucesso!");
@@ -117,18 +120,18 @@ class User {
 
   getWithdraw() {
     const withdraw = Number(window.prompt("Digite o valor que deseja sacar:"), "");
-    const balances = this.arrayClient.map((element) => {
+    const balance = this.arrayClient.map((element) => {
       return element.account.balance;
     });
     if (withdraw <= 0) {
       alert("Digite um valor maior que 0!");
       this.getWithdraw();
     }
-    if (balances <= 0) {
+    if (balance <= 0) {
       alert("Saldo insuficiente!");
       this.getAccount();
     }
-    if (withdraw > balances) {
+    if (withdraw > balance) {
       alert("Saldo insuficiente!");
       this.getAccount();
     } else {
@@ -157,13 +160,18 @@ class User {
   }
 
   getTransactions() {
+    const transactions = {
+      date: new Date(),
+      amount: null,
+      type: ""
+    };
     
   }
 }
 class Bank extends User {
   constructor() {
     super();
-    this.operation = null;
+    
   }
 
   loadClient() {
@@ -197,7 +205,7 @@ class Bank extends User {
   }
 
   loadError() {
-    const result = Number(window.prompt("Opção inválida. Voce deseja tentar novamente?\n1. Sim\n2. Não", ""));
+    const result = Number(window.prompt("Opção inválida. Você deseja tentar novamente?\n1. Sim\n2. Não", ""));
     if (result === 1) {
       return this.loadSystem();
     } else {
@@ -210,8 +218,8 @@ class Bank extends User {
   }
 
   loadSystem() {
-    alert("--- Olá, seja bem vindo ao Banco do Brasil ---");
-    const menu = Number(window.prompt("Insira a opcao desejada:\n1. Gerente\n2. Cliente", ""));
+    alert("--- Olá, seja bem vindo ao BANCO OPERA ---");
+    const menu = Number(window.prompt("Insira a opção desejada:\n1. Gerente\n2. Cliente", ""));
     switch (menu) {
       case 1:
         this.loadManager();
