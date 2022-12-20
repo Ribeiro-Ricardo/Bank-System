@@ -6,7 +6,7 @@ class User {
 
   getAccount() {
     const initialValue = this.arrayClient.map((element) => {
-      return element.conta.saldo;
+      return element.account.balance;
     });
     const loginName = this.arrayClient.map((element) => {
       return element.name;
@@ -50,8 +50,8 @@ class User {
         zipCode: prompt("Cep:", ""),
         country: prompt("País:", "")
       };
-    addClient.conta = {
-      saldo: 0.0
+    addClient.account = {
+      balance: 0.0
     };
     this.arrayClient.push(addClient);
 
@@ -117,24 +117,24 @@ class User {
 
   getWithdraw() {
     const withdraw = Number(window.prompt("Digite o valor que deseja sacar:"), "");
-    const balance = this.arrayClient.map((element) => {
-      return element.conta.saldo;
+    const balances = this.arrayClient.map((element) => {
+      return element.account.balance;
     });
     if (withdraw <= 0) {
       alert("Digite um valor maior que 0!");
       this.getWithdraw();
     }
-    if (balance <= 0) {
+    if (balances <= 0) {
       alert("Saldo insuficiente!");
       this.getAccount();
     }
-    if (withdraw > balance) {
+    if (withdraw > balances) {
       alert("Saldo insuficiente!");
       this.getAccount();
     } else {
       alert("Transação efetuada com sucesso!");
       this.arrayClient.map((element) => {
-        element.conta.saldo -= withdraw;
+        element.account.balance -= withdraw;
         return element;
       });
       this.getAccount();
@@ -146,7 +146,7 @@ class User {
     if (deposit > 0) {
       alert("Transação efetuada com sucesso!");
       this.arrayClient.map((element) => {
-        element.conta.saldo += deposit;
+        element.account.balance += deposit;
         return element;
       });
       this.getAccount();
@@ -179,12 +179,7 @@ class Bank extends User {
   }
   loadManager() {
     alert("--- Sistema Gerente ---");
-    const managerSystem = Number(
-      window.prompt(
-        "Insira a opção desejada:\n1. Listar Cliente\n2. Criar Cliente\n3. Sair",
-        ""
-      )
-    );
+    const managerSystem = Number(window.prompt("Insira a opção desejada:\n1. Listar Cliente\n2. Criar Cliente\n3. Sair", ""));
     switch (managerSystem) {
       case 1:
         this.listClients();
@@ -202,12 +197,7 @@ class Bank extends User {
   }
 
   loadError() {
-    const result = Number(
-      window.prompt(
-        "Opção inválida. Voce deseja tentar novamente?\n1. Sim\n2. Não",
-        ""
-      )
-    );
+    const result = Number(window.prompt("Opção inválida. Voce deseja tentar novamente?\n1. Sim\n2. Não", ""));
     if (result === 1) {
       return this.loadSystem();
     } else {
@@ -220,10 +210,8 @@ class Bank extends User {
   }
 
   loadSystem() {
-    alert("--- Ola, seja bem vindo ao Banco do Brasil ---");
-    const menu = Number(
-      window.prompt("Insira a opcao desejada:\n1. Gerente\n2. Cliente", "")
-    );
+    alert("--- Olá, seja bem vindo ao Banco do Brasil ---");
+    const menu = Number(window.prompt("Insira a opcao desejada:\n1. Gerente\n2. Cliente", ""));
     switch (menu) {
       case 1:
         this.loadManager();
